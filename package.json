@@ -1,0 +1,41 @@
+{
+  "name": "ciy",
+  "version": "0.1.0",
+  "description": "Validate catalog-info.yaml files and linked catalog compliance from the command line.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "ciy": "./bin/ciy.js"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "clean": "node -e \"fs.rmSync('dist', { recursive: true, force: true })\"",
+    "build": "npm run clean && tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "oxlint .",
+    "test": "npm run build && node --test",
+    "test:unit": "npm run build && node --test test/unit/*.test.js",
+    "test:integration": "npm run build && node --test test/integration/*.test.js",
+    "test:coverage": "npm run build && node scripts/check-coverage.js",
+    "audit": "npm audit --audit-level=moderate",
+    "check": "npm run typecheck && npm run lint && npm run test && npm run audit",
+    "ci": "npm ci && npm run check",
+    "prepack": "npm run build"
+  },
+  "dependencies": {
+    "yaml": "^2.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.12.4",
+    "oxlint": "^1.28.0",
+    "typescript": "^5.9.3"
+  }
+}
